@@ -2,7 +2,7 @@ import {
   GlobalKeyboardListener,
   IGlobalKeyEvent,
 } from "node-global-key-listener";
-import { Command } from "../commands/spotify/main";
+import { Command } from "../modules/spotify/commands/main";
 
 function normalizeModifier(key: string) {
   if (!key) return "";
@@ -51,7 +51,6 @@ export function startListener(commands: Command[]) {
           loggedCombos.add(combo);
 
           const cmd = commands.find((c) => c.hotkey === combo);
-          console.log("Comando encontrado:", cmd);
           if (cmd) cmd.action();
         }
       }

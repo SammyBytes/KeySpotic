@@ -1,4 +1,4 @@
-import { playPause, nextTrack, previousTrack } from "./spotify";
+import { playPause, nextTrack, previousTrack } from "./player";
 
 export interface Command {
   hotkey: string;
