@@ -9,8 +9,6 @@ const hotkeysPath = Bun.file("./hotkeys.json");
 const hotkeysText = await hotkeysPath.text();
 const hotkeysConfig = JSON.parse(hotkeysText);
 
-console.log("Hotkeys configuration loaded:", hotkeysConfig);
-
 //TODO: Use ZOD or similar for validation
 export const spotifyCommands: Command[] = [
   { hotkey: hotkeysConfig.spotify.playPause, action: playPause },

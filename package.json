@@ -1,7 +1,23 @@
 {
   "name": "keyspotic",
-  "module": "src/index.ts",
+  "version": "1.0.0",
+  "description": "Background service to control Spotify via global hotkeys",
+  "main": "src/index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun"
+  },
+  "keywords": [
+    "spotify",
+    "hotkeys",
+    "listener",
+    "bun",
+    "typescript"
+  ],
+  "author": "Samuel Beato",
+  "license": "MIT",
   "devDependencies": {
     "@types/bun": "latest"
   },
