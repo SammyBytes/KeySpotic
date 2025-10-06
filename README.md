@@ -109,11 +109,12 @@ node dist/index.js
 
 > This produces a build ready for end users. Everything runs from the `dist/` folder.
 
+
 ---
 
 ## 🎹 Hotkeys
 
-* Configurable in `hotkeys.json`:
+Hotkeys are configurable in `hotkeys.json`:
 
 ```json
 [
@@ -122,17 +123,68 @@ node dist/index.js
     "action": "playPause"
   },
   {
-    "hotkey": "CTRL + ALT + RIGHT ARROW",
+    "hotkey": "CTRL + ALT + RIGHT",
     "action": "nextTrack"
   },
   {
-    "hotkey": "CTRL + ALT + LEFT ARROW",
+    "hotkey": "CTRL + ALT + LEFT",
     "action": "previousTrack"
   }
 ]
 ```
 
-* You can add or modify hotkeys without rebuilding the project.
+### Key Combination Nomenclature
+
+The `node-global-key-listener` package uses specific nomenclature for key combinations. Here's a breakdown:
+
+#### Modifier Keys
+
+* `LEFT CTRL`, `RIGHT CTRL`: Control keys on the left and right sides of the keyboard.
+* `LEFT ALT`, `RIGHT ALT`: Alt keys on the left and right sides.
+* `LEFT SHIFT`, `RIGHT SHIFT`: Shift keys on the left and right sides.
+* `LEFT META`, `RIGHT META`: Meta keys (e.g., Windows key on Windows, Command key on macOS).
+
+#### Function Keys
+
+* `F1` to `F24`: Function keys located at the top of the keyboard.
+
+#### Alphanumeric Keys
+
+* `A` to `Z`: Alphabetic keys.
+* `0` to `9`: Numeric keys.
+
+#### Special Keys
+
+* `SPACE`: Spacebar.
+* `BACKSPACE`: Backspace key.
+* `ENTER`: Enter key.
+* `ESCAPE`: Escape key.
+
+#### Arrow Keys
+
+* `UP ARROW`, `DOWN ARROW`, `LEFT ARROW`, `RIGHT ARROW`: Arrow keys.
+
+#### Numpad Keys
+
+* `NUMPAD 0` to `NUMPAD 9`: Numeric keys on the numpad.
+* `NUMPAD PLUS`, `NUMPAD MINUS`, `NUMPAD MULTIPLY`, `NUMPAD DIVIDE`: Arithmetic operators on the numpad.
+
+#### Other Special Keys
+
+* `CAPS LOCK`, `NUM LOCK`, `SCROLL LOCK`: Lock keys.
+* `TAB`, `DELETE`, `INSERT`: Other special keys.
+
+#### Mouse Buttons
+
+* `MOUSE LEFT`, `MOUSE RIGHT`, `MOUSE MIDDLE`: Mouse buttons.
+
+#### Scroll Keys
+
+* `PAGE UP`, `PAGE DOWN`, `HOME`, `END`: Scroll keys.
+
+#### Rare Use Keys
+
+* `PRINT SCREEN`, `PAUSE`, `BREAK`: Rarely used keys.
 
 ---
 
@@ -163,3 +215,9 @@ node dist/index.js
 4. The hotkey listener runs in the background, even if Spotify is minimized.
 
 ---
+
+
+## 📝 License
+
+MIT License © 2025 SammyBytes
+
