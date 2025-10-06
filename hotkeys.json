@@ -1,0 +1,7 @@
+{
+  "spotify": {
+    "playPause": "CTRL + ALT + P",
+    "nextTrack": "CTRL + SHIFT + RIGHT ARROW",
+    "previousTrack": "CTRL + SHIFT + LEFT ARROW"
+  }
+}

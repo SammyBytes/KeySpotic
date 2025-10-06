@@ -1,7 +1,23 @@
 {
   "name": "keyspotic",
-  "module": "src/index.ts",
+  "version": "1.0.0",
+  "description": "Background service to control Spotify via global hotkeys",
+  "main": "src/index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun && cp hotkeys.json dist/hotkeys.json"
+  },
+  "keywords": [
+    "spotify",
+    "hotkeys",
+    "listener",
+    "bun",
+    "typescript"
+  ],
+  "author": "Samuel Beato",
+  "license": "MIT",
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -9,7 +25,9 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "iohook": "^0.9.3",
-    "node-global-key-listener": "^0.3.0"
+    "@types/spotify-web-api-node": "^5.0.11",
+    "hono": "^4.9.10",
+    "node-global-key-listener": "^0.3.0",
+    "spotify-web-api-node": "^5.0.2"
   }
 }
