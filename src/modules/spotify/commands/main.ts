@@ -1,11 +1,12 @@
 import { playPause, nextTrack, previousTrack } from "./player";
+import path from "path";
 
 export interface Command {
   hotkey: string;
   action: () => void;
 }
-
-const hotkeysPath = Bun.file("./hotkeys.json");
+const root = process.cwd();
+const hotkeysPath = Bun.file(path.join(root, "hotkeys.json"));
 const hotkeysText = await hotkeysPath.text();
 const hotkeysConfig = JSON.parse(hotkeysText);
 
