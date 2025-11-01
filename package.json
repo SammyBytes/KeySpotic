@@ -7,7 +7,11 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
-    "build": "bun build src/index.ts --outdir dist --target bun && cp hotkeys.json dist/hotkeys.json"
+    "build:js": "bun build src/index.ts --outdir dist --target bun && cp hotkeys.json dist/hotkeys.json",
+    "build:linux": "bun build --compile --target=bun-linux-x64-modern src/index.ts --outfile dist/linux/KeySpotic-linux",
+    "build:mac": "bun build --compile --target=bun‑darwin‑x64 src/index.ts --outfile dist/mac/KeySpotic-macos",
+    "build:win": "bun build --compile --target=bun‑windows‑x64 src/index.ts --outfile dist/win/KeySpotic-win.exe",
+    "build": "bun run build:linux && bun run build:mac && bun run build:win"
   },
   "keywords": [
     "spotify",
