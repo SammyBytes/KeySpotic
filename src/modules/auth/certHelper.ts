@@ -1,5 +1,5 @@
 import { binDir } from "../../shared/shared";
-import { join } from "path";
+import { join, resolve } from "path";
 
 /**
  * Paths to the TLS certificate and key files.
@@ -7,8 +7,8 @@ import { join } from "path";
  *
  */
 const retrieveCertPaths = {
-  certFile: join(__dirname, "certs", "cert.pem"),
-  keyFile: join(__dirname, "certs", "key.pem"),
+  certFile: resolve(join(import.meta.dir, "certs", "cert.pem")),
+  keyFile: resolve(join(import.meta.dir, "certs", "key.pem")),
 };
 
 export { retrieveCertPaths };

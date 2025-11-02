@@ -1,5 +1,7 @@
 import { spotifyAuthRoutes } from "./routes/main";
 import { retrieveCertPaths } from "../auth/certHelper";
+import { existsSync } from "fs";
+
 import {
   retrieveTokens,
   tokenExists,
@@ -42,12 +44,18 @@ const retrieveAuthorizationToken = (): boolean => {
  * Sets up and starts the HTTPS server to handle Spotify OAuth callbacks.
  */
 const serveSpotify = () => {
+  const { certFile, keyFile } = retrieveCertPaths;
+  if (!existsSync(certFile) || !existsSync(keyFile)) {
+    throw new Error(
+      `[Spotify] No se pueden encontrar los archivos de certificado en:\nCert: ${certFile}\nKey: ${keyFile}`
+    );
+  }
   Bun.serve({
     port: Number(Bun.env.HONO_PORT) || 54321,
     fetch: spotifyAuthRoutes.fetch,
     tls: {
-      certFile: retrieveCertPaths.certFile,
-      keyFile: retrieveCertPaths.keyFile,
+      certFile: certFile,
+      keyFile: keyFile,
     },
   });
 
@@ -55,3 +63,5 @@ const serveSpotify = () => {
     `Server HTTPS listening on https://localhost:${Bun.env.HONO_PORT}`
   );
 };
+
+
