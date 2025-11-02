@@ -47,7 +47,7 @@ const serveSpotify = () => {
   const { certFile, keyFile } = retrieveCertPaths;
   if (!existsSync(certFile) || !existsSync(keyFile)) {
     throw new Error(
-      `[Spotify] No se pueden encontrar los archivos de certificado en:\nCert: ${certFile}\nKey: ${keyFile}`
+      `[Spotify] Neither certificate file nor key file found. Please ensure that both files exist at the specified paths: certFile=${certFile}, keyFile=${keyFile}`
     );
   }
   Bun.serve({
@@ -63,5 +63,3 @@ const serveSpotify = () => {
     `Server HTTPS listening on https://localhost:${Bun.env.HONO_PORT}`
   );
 };
-
-
