@@ -1,9 +1,12 @@
-import db from "../config/spotifyDB";
+import db from "../../config/spotifyDB";
 import {
   mapRowToTokensResponse,
   RetrieveTokensResponse as TokensResponse,
-} from "../models/tokens/retrieveTokensResponse";
-import { mapToDb, SaveTokensRequest } from "../models/tokens/saveTokensRequest";
+} from "../../models/tokens/retrieveTokensResponse";
+import {
+  mapToDb,
+  SaveTokensRequest,
+} from "../../models/tokens/saveTokensRequest";
 
 /**
  * Retrieves the most recent token information from the database.
