@@ -5,6 +5,10 @@ import { spotifyApi } from "../config/spotify";
  */
 export const playOrPause = async () => {
   if (!isSpotifyInitialized()) return;
+  if (!(await isDeviceActive())) {
+    console.warn("[Spotify] No active device found.");
+    return;
+  }
 
   const playback = await spotifyApi.getMyCurrentPlaybackState();
   if (playback.body?.is_playing) {
@@ -22,6 +26,10 @@ export const playOrPause = async () => {
  */
 export const nextTrack = async () => {
   if (!isSpotifyInitialized()) return;
+  if (!(await isDeviceActive())) {
+    console.warn("[Spotify] No active device found.");
+    return;
+  }
   await spotifyApi.skipToNext();
   console.log("[Spotify] Next track.");
 };
@@ -31,6 +39,10 @@ export const nextTrack = async () => {
  */
 export const previousTrack = async () => {
   if (!isSpotifyInitialized()) return;
+  if (!(await isDeviceActive())) {
+    console.warn("[Spotify] No active device found.");
+    return;
+  }
   await spotifyApi.skipToPrevious();
   console.log("[Spotify] Previous track.");
 };
@@ -41,4 +53,9 @@ const isSpotifyInitialized = (): boolean => {
     return false;
   }
   return true;
+};
+
+const isDeviceActive = async (): Promise<boolean> => {
+  const devices = await spotifyApi.getMyDevices();
+  return devices.body?.devices?.some((device) => device.is_active) ?? false;
 };

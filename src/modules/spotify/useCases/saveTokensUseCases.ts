@@ -23,6 +23,8 @@ export const executeAsync = async (
     };
 
     saveTokens(saveData);
+    spotifyApi.setAccessToken(saveData.accessToken);
+    console.log("[Spotify] Tokens saved successfully.");
     return ok(true);
   } catch (error) {
     console.error("Error saving tokens:", error);
