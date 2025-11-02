@@ -1,13 +1,10 @@
-import { binDir } from "../../../shared/shared";
 import { playOrPause, nextTrack, previousTrack } from "./player";
-import { join } from "path";
+import hotkeysConfig from "../../../../hotkeys.json" with { type: "json" };
 
 export type Command = {
   hotkey: string;
   action: () => void;
 };
-const hotkeysText = await Bun.file(join(binDir, "hotkeys.json")).text();
-const hotkeysConfig = JSON.parse(hotkeysText);
 
 /**
  * Array of Spotify commands with their associated hotkeys and actions.
@@ -15,7 +12,7 @@ const hotkeysConfig = JSON.parse(hotkeysText);
  * This array is used to map user inputs to Spotify playback controls.
  */
 export const spotifyCommands: Command[] = [
-  { hotkey: hotkeysConfig.spotify.playOrPause, action: playOrPause },
+  { hotkey: hotkeysConfig.spotify.playPause, action: playOrPause },
   { hotkey: hotkeysConfig.spotify.nextTrack, action: nextTrack },
   { hotkey: hotkeysConfig.spotify.previousTrack, action: previousTrack },
 ];

@@ -1,19 +1,20 @@
 import { join } from "path";
 import { Database } from "bun:sqlite";
-import { binDir, isProduction } from "../../../shared/shared";
+import { mkdirSync } from "fs";
 
-const dbPath = join(binDir, "keyspotic.db");
+const configDatabase = join(process.env.HOME!, ".config", "keyspotic");
+mkdirSync(configDatabase, { recursive: true });
+
+const dbPath = join(configDatabase, "keyspotic.db");
 const db = new Database(dbPath);
-const migrationPath = isProduction
-  ? join(binDir, "migrations", "001_create_spotify_tokens_table.sql")
-  : join(
-      process.cwd(),
-      "src",
-      "migrations",
-      "001_create_spotify_tokens_table.sql"
-    );
+
 const queries = {
-  createTokensTable: await Bun.file(migrationPath).text(),
+  createTokensTable: ` CREATE TABLE IF NOT EXISTS spotify_tokens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    access_token TEXT,
+    refresh_token TEXT,
+    expires_at INTEGER
+  );`,
 };
 
 db.run(queries.createTokensTable);
