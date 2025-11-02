@@ -1,6 +1,5 @@
 import { Hono } from "hono";
-import { spotifyApi } from "../config/spotifyConfig";
-import { saveTokens } from "../services/database/tokensServices";
+
 import { executeAsync } from "../useCases/saveTokensUseCases";
 
 export const spotifyAuthRoutes = new Hono();

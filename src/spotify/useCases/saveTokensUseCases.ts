@@ -1,5 +1,5 @@
 import { err, ok, Result } from "../../shared/result";
-import { spotifyApi } from "../config/spotifyConfig";
+import { spotifyApi } from "../config/spotify";
 import { SaveTokensRequest } from "../models/tokens/saveTokensRequest";
 import { saveTokens } from "../services/database/tokensServices";
 

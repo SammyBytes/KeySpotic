@@ -1,5 +1,5 @@
 import { spotifyAuthRoutes } from "./routes/main";
-import { scopes, spotifyApi } from "./config/spotifyConfig";
+import { scopes, spotifyApi } from "./config/spotify";
 import { retrieveCertPaths } from "../auth/certHelper";
 import { tokenExists } from "./services/database/tokensServices";
 /**

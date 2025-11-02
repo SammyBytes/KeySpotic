@@ -1,4 +1,4 @@
-import { initSpotify } from "../config/spotifyConfig";
+import { initSpotify } from "../config/spotify";
 
 export async function playPause() {
   const spotifyApi = await initSpotify();

@@ -1,4 +1,4 @@
-import db from "../../config/spotifyDB";
+import db from "../../config/database";
 import {
   mapRowToTokensResponse,
   RetrieveTokensResponse as TokensResponse,
