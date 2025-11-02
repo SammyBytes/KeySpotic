@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { spotifyApi } from "../config/spotifyConfig";
-import { saveToken } from "../config/spotifyDB";
+import { saveTokens } from "../database/tokensServices";
 
 export const spotifyAuthRoutes = new Hono();
 
@@ -14,7 +14,7 @@ spotifyAuthRoutes.get("/api/v1/spotify/callback", async (c) => {
   try {
     const data = await spotifyApi.authorizationCodeGrant(code);
     const { access_token, refresh_token, expires_in } = data.body;
-    saveToken({ access_token, refresh_token, expires_in });
+    saveTokens({ access_token, refresh_token, expires_in });
     console.log("Token saved successfully.");
     return c.text("Spotify authorized successfully. You can close this tab.");
   } catch (err) {
