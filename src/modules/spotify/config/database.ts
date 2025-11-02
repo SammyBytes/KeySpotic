@@ -2,7 +2,8 @@ import { join } from "path";
 import { Database } from "bun:sqlite";
 import { mkdirSync } from "fs";
 
-const configDatabase = join(process.env.HOME!, ".config", "keyspotic");
+const homeDir = process.env.HOME || process.env.USERPROFILE || ".";
+const configDatabase = join(homeDir, ".config", "keyspotic");
 mkdirSync(configDatabase, { recursive: true });
 
 const dbPath = join(configDatabase, "keyspotic.db");
