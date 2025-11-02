@@ -1,6 +1,9 @@
 import { spotifyAuthRoutes } from "./routes/main";
 import { retrieveCertPaths } from "../auth/certHelper";
-import { tokenExists } from "./services/database/tokensServices";
+import {
+  retrieveTokens,
+  tokenExists,
+} from "./services/database/tokensServices";
 import { scopes, spotifyApi } from "./config/spotify";
 /**
  * Initializes Spotify authentication by retrieving existing tokens
@@ -23,6 +26,8 @@ const retrieveAuthorizationToken = (): boolean => {
   if (isTokenExists) {
     console.log("[Spotify] Token already exists. No need to reauthorize.");
     console.log("[Spotify] Delete spotify.db to reauthorize.");
+    const { accessToken } = retrieveTokens()!;
+    spotifyApi.setAccessToken(accessToken);
     return true;
   }
 

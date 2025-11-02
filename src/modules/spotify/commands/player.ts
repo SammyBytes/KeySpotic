@@ -52,6 +52,11 @@ const isSpotifyInitialized = (): boolean => {
     console.warn("[Spotify] Not initialized.");
     return false;
   }
+
+  console.log(
+    "[Spotify] Initialized with access token:",
+    spotifyApi.getAccessToken()
+  );
   return true;
 };
 
