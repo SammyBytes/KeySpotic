@@ -2,7 +2,7 @@ import {
   GlobalKeyboardListener,
   IGlobalKeyEvent,
 } from "node-global-key-listener";
-import { Command } from "../modules/spotify/commands/main";
+import { Command } from "../spotify/commands/main";
 
 function normalizeModifier(key: string) {
   if (!key) return "";

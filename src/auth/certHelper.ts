@@ -1,4 +1,4 @@
-import { binDir } from "../../../shared";
+import { binDir } from "../shared";
 import { join } from "path";
 
 /**
