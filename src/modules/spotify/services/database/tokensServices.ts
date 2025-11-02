@@ -41,7 +41,6 @@ export const saveTokens = (tokens: SaveTokensRequest): void => {
     VALUES (?, ?, ?)`;
 
   const params = Object.values(mapToDb(tokens));
-  console.log("Saving tokens with params:", params);
   db.run(insertQuery, params);
 };
 /**
