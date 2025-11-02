@@ -1,18 +1,18 @@
-import { playPause, nextTrack, previousTrack } from "./player";
-import path from "path";
+import { playOrPause, nextTrack, previousTrack } from "./player";
+import hotkeysConfig from "../../../../hotkeys.json" with { type: "json" };
 
-export interface Command {
+export type Command = {
   hotkey: string;
   action: () => void;
-}
-const root = process.cwd();
-const hotkeysPath = Bun.file(path.join(root, "hotkeys.json"));
-const hotkeysText = await hotkeysPath.text();
-const hotkeysConfig = JSON.parse(hotkeysText);
+};
 
-//TODO: Use ZOD or similar for validation
+/**
+ * Array of Spotify commands with their associated hotkeys and actions.
+ * Each command consists of a hotkey string and a corresponding action function.
+ * This array is used to map user inputs to Spotify playback controls.
+ */
 export const spotifyCommands: Command[] = [
-  { hotkey: hotkeysConfig.spotify.playPause, action: playPause },
+  { hotkey: hotkeysConfig.spotify.playPause, action: playOrPause },
   { hotkey: hotkeysConfig.spotify.nextTrack, action: nextTrack },
   { hotkey: hotkeysConfig.spotify.previousTrack, action: previousTrack },
 ];

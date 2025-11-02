@@ -33,6 +33,8 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # Finder (MacOS) folder config
 .DS_Store
 src/spotify.db
-certs/cert.pem
-certs/key.pem
+src/certs/*
+certs/*
 spotify.db
+src/keyspotic.db
+keyspotic.db

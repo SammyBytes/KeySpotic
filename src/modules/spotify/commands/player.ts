@@ -1,8 +1,14 @@
-import { initSpotify } from "../config/spotifyConfig";
-
-export async function playPause() {
-  const spotifyApi = await initSpotify();
-  if (!spotifyApi) return console.warn("[Spotify] Not initialized.");
+import { spotifyApi } from "../config/spotify";
+/**
+ * Toggles playback state: plays if paused, pauses if playing.
+ * @returns void
+ */
+export const playOrPause = async () => {
+  if (!isSpotifyInitialized()) return;
+  if (!(await isDeviceActive())) {
+    console.warn("[Spotify] No active device found.");
+    return;
+  }
 
   const playback = await spotifyApi.getMyCurrentPlaybackState();
   if (playback.body?.is_playing) {
@@ -12,18 +18,44 @@ export async function playPause() {
     await spotifyApi.play();
     console.log("[Spotify] Playing...");
   }
-}
+};
 
-export async function nextTrack() {
-  const spotifyApi = await initSpotify();
-  if (!spotifyApi) return;
+/**
+ * Skips to the next track in the Spotify playback.
+ * @returns void
+ */
+export const nextTrack = async () => {
+  if (!isSpotifyInitialized()) return;
+  if (!(await isDeviceActive())) {
+    console.warn("[Spotify] No active device found.");
+    return;
+  }
   await spotifyApi.skipToNext();
   console.log("[Spotify] Next track.");
-}
-
-export async function previousTrack() {
-  const spotifyApi = await initSpotify();
-  if (!spotifyApi) return;
+};
+/**
+ * Skips to the previous track in the Spotify playback.
+ * @returns void
+ */
+export const previousTrack = async () => {
+  if (!isSpotifyInitialized()) return;
+  if (!(await isDeviceActive())) {
+    console.warn("[Spotify] No active device found.");
+    return;
+  }
   await spotifyApi.skipToPrevious();
   console.log("[Spotify] Previous track.");
-}
+};
+
+const isSpotifyInitialized = (): boolean => {
+  if (!spotifyApi) {
+    console.warn("[Spotify] Not initialized.");
+    return false;
+  }
+  return true;
+};
+
+const isDeviceActive = async (): Promise<boolean> => {
+  const devices = await spotifyApi.getMyDevices();
+  return devices.body?.devices?.some((device) => device.is_active) ?? false;
+};
