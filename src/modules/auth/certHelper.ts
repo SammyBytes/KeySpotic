@@ -7,8 +7,8 @@ import { join } from "path";
  *
  */
 const retrieveCertPaths = {
-  certFile: join(binDir, "certs", "cert.pem"),
-  keyFile: join(binDir, "certs", "key.pem"),
+  certFile: join(__dirname, "certs", "cert.pem"),
+  keyFile: join(__dirname, "certs", "key.pem"),
 };
 
 export { retrieveCertPaths };
