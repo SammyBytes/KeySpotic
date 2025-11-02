@@ -8,7 +8,8 @@ import { retrieveCertPaths } from "../auth/certHelper";
  *
  */
 export const initSpotifyAuth = () => {
-  retrieveAuthorizationToken();
+  const result = retrieveAuthorizationToken();
+  if (result) return;
   serveSpotify();
 };
 
@@ -16,21 +17,22 @@ export const initSpotifyAuth = () => {
  * Sets up Spotify authentication by checking for existing tokens
  * and generating an authorization URL if none exist.
  */
-const retrieveAuthorizationToken = () => {
+const retrieveAuthorizationToken = (): boolean => {
   const existing = getToken();
 
   if (existing) {
     console.log("[Spotify] Token already exists. No need to reauthorize.");
     console.log("[Spotify] Delete spotify.db to reauthorize.");
-    // No need to close the app, just return
-    return;
+    return true;
   }
 
   // Generate authorization URL
   const authorizeURL = spotifyApi.createAuthorizeURL(scopes, "state-spotify");
   console.log("\n Open this link to authorize Spotify:");
   console.log(authorizeURL);
+  return false;
 };
+
 /**
  * Sets up and starts the HTTPS server to handle Spotify OAuth callbacks.
  */

@@ -1,14 +1,11 @@
 import fs from "fs";
-import path from "path";
+import { join } from "path";
 import { Database } from "bun:sqlite";
 import { fileURLToPath } from "url";
+import { binDir } from "../../shared";
 
-const root = process.cwd();
-
-if (!fs.existsSync(root)) fs.mkdirSync(root, { recursive: true });
-
-const dbPath = path.join(root, "spotify.db");
-const db = new Database(dbPath);
+const dbPath = join(binDir, "keyspotic.db");
+export const db = new Database(dbPath);
 
 db.run(`
   CREATE TABLE IF NOT EXISTS spotify_tokens (
