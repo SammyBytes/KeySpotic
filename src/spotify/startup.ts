@@ -1,7 +1,7 @@
 import { spotifyAuthRoutes } from "./routes/main";
-import { scopes, spotifyApi } from "./config/spotify";
 import { retrieveCertPaths } from "../auth/certHelper";
 import { tokenExists } from "./services/database/tokensServices";
+import { scopes, spotifyApi } from "./config/spotify";
 /**
  * Initializes Spotify authentication by retrieving existing tokens
  * and setting up the HTTPS server for OAuth callbacks.

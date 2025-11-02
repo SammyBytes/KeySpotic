@@ -1,3 +1,10 @@
+/**
+ * Represents the response containing retrieved tokens.
+ * @property {string} accessToken - The access token.
+ * @property {string} refreshToken - The refresh token.
+ * @property {number} expiresIn - The expiration time in milliseconds.
+ * 
+ */
 export type RetrieveTokensResponse = {
   accessToken: string;
   refreshToken: string;

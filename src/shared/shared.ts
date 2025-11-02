@@ -11,4 +11,4 @@ export const isProduction = Bun.env.NODE_ENV === "production";
  * const configPath = path.join(binDir, "config", "settings.json");
  * ```
  */
-export const binDir = dirname(Bun.main);
+export const binDir = isProduction ? dirname(Bun.main) : process.cwd();

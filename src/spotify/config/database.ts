@@ -1,17 +1,19 @@
-import fs from "fs";
 import { join } from "path";
 import { Database } from "bun:sqlite";
-import { binDir } from "../../shared/shared";
+import { binDir, isProduction } from "../../shared/shared";
 
 const dbPath = join(binDir, "keyspotic.db");
 const db = new Database(dbPath);
-const migrationPath = join(
-  binDir,
-  "migrations",
-  "001_create_spotify_tokens_table.sql"
-);
+const migrationPath = isProduction
+  ? join(binDir, "migrations", "001_create_spotify_tokens_table.sql")
+  : join(
+      process.cwd(),
+      "src",
+      "migrations",
+      "001_create_spotify_tokens_table.sql"
+    );
 const queries = {
-  createTokensTable: fs.readFileSync(migrationPath, "utf-8"),
+  createTokensTable: await Bun.file(migrationPath).text(),
 };
 
 db.run(queries.createTokensTable);
