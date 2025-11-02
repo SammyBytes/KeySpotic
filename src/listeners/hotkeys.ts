@@ -2,62 +2,32 @@ import {
   GlobalKeyboardListener,
   IGlobalKeyEvent,
 } from "node-global-key-listener";
-import { Command } from "../spotify/commands/main";
+import { Command } from "../modules/hotkey/core/engine";
+import { initialState, updateState } from "../modules/hotkey/core/state";
+import { executeCommands } from "../modules/hotkey/core/engine";
 
-function normalizeModifier(key: string) {
-  if (!key) return "";
-  if (key.includes("CTRL")) return "CTRL";
-  if (key.includes("ALT")) return "ALT";
-  if (key.includes("SHIFT")) return "SHIFT";
-  if (key.includes("META")) return "META";
-  return key.toUpperCase();
-}
+const IGNORED_EVENTS = ["MOUSE"];
 
-function buildCombo(heldModifiers: Set<string>, key: string) {
-  // Order fixed for consistency: CTRL + ALT + SHIFT + META + key
-  const order = ["CTRL", "ALT", "SHIFT", "META"];
-  const mods = order.filter((m) => heldModifiers.has(m));
-  return mods.length
-    ? [...mods, key.toUpperCase()].join(" + ")
-    : key.toUpperCase();
-}
-
-export function startListener(commands: Command[]) {
+/**
+ * Starts the global hotkey listener and processes key events.
+ * @param commands The list of registered commands to execute on hotkey presses.
+ * @returns A function to stop the listener.
+ */
+export const startListener = (commands: Command[]) => {
   const keyboard = new GlobalKeyboardListener();
-  const heldModifiers = new Set<string>();
-  const loggedCombos = new Set<string>();
+  let internalState = initialState();
 
-  const MODIFIERS = new Set([
-    "LEFT CTRL",
-    "RIGHT CTRL",
-    "LEFT ALT",
-    "RIGHT ALT",
-    "LEFT SHIFT",
-    "RIGHT SHIFT",
-  ]);
+  keyboard.addListener((event: IGlobalKeyEvent) => {
+    if (!event.name || IGNORED_EVENTS.includes(event.name)) return;
 
-  keyboard.addListener((e: IGlobalKeyEvent) => {
-    if (!e.name || e.name.includes("MOUSE")) return;
+    const data = { name: event.name, state: event.state };
+    // Transform the state immutably
+    internalState = updateState(data, internalState);
 
-    const key = e.name.toUpperCase();
+    // Evaluate the current state and execute commands
+    const actions = executeCommands(internalState, data, commands);
 
-    if (e.state === "DOWN") {
-      if (MODIFIERS.has(key)) {
-        heldModifiers.add(normalizeModifier(key));
-      } else {
-        const combo = buildCombo(heldModifiers, key);
-
-        if (!loggedCombos.has(combo)) {
-          loggedCombos.add(combo);
-
-          const cmd = commands.find((c) => c.hotkey === combo);
-          if (cmd) cmd.action();
-        }
-      }
-    } else if (e.state === "UP") {
-      const normalizedKey = normalizeModifier(key);
-      if (MODIFIERS.has(key)) heldModifiers.delete(normalizedKey);
-      else loggedCombos.clear();
-    }
+    // Execute all matched actions
+    actions.forEach((act) => act());
   });
-}
+};

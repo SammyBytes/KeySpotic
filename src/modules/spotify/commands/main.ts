@@ -1,4 +1,4 @@
-import { binDir } from "../../shared/shared";
+import { binDir } from "../../../shared/shared";
 import { playOrPause, nextTrack, previousTrack } from "./player";
 import { join } from "path";
 

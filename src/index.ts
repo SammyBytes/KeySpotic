@@ -1,6 +1,6 @@
 import { startListener } from "./listeners/hotkeys";
-import { initSpotifyAuth } from "./spotify/startup";
-import { spotifyCommands } from "./spotify/commands/main";
+import { initSpotifyAuth } from "./modules/spotify/startup";
+import { spotifyCommands } from "./modules/spotify/commands/main";
 
 const allCommands = [...spotifyCommands];
 

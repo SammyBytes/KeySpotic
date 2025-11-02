@@ -1,6 +1,6 @@
 import { join } from "path";
 import { Database } from "bun:sqlite";
-import { binDir, isProduction } from "../../shared/shared";
+import { binDir, isProduction } from "../../../shared/shared";
 
 const dbPath = join(binDir, "keyspotic.db");
 const db = new Database(dbPath);
