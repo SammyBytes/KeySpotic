@@ -46,7 +46,7 @@ export const initSpotify = async (): Promise<SpotifyWebApi | null> => {
  * @param expiresIn The expiration time of the current access token.
  * @returns void
  */
-const refreshTokenIfNeeded = async (
+export const refreshTokenIfNeeded = async (
   refreshToken: string,
   expiresIn: number
 ) => {
@@ -68,6 +68,6 @@ const refreshTokenIfNeeded = async (
   }
 };
 
-const isNotExpired = (expiresIn: number) => {
+export const isNotExpired = (expiresIn: number) => {
   return Date.now() < expiresIn;
 };

@@ -1,4 +1,8 @@
 import { spotifyApi } from "../config/spotify";
+import { executeAsync } from "../useCases/notifyInfoSongUseCase";
+
+const WAIT_TIME_MS = 500;
+
 /**
  * Toggles playback state: plays if paused, pauses if playing.
  * @returns void
@@ -31,6 +35,8 @@ export const nextTrack = async () => {
     return;
   }
   await spotifyApi.skipToNext();
+  await wait(WAIT_TIME_MS);
+  await executeAsync();
   console.log("[Spotify] Next track.");
 };
 /**
@@ -44,6 +50,9 @@ export const previousTrack = async () => {
     return;
   }
   await spotifyApi.skipToPrevious();
+  await wait(WAIT_TIME_MS);
+  await executeAsync();
+
   console.log("[Spotify] Previous track.");
 };
 
@@ -59,3 +68,5 @@ const isDeviceActive = async (): Promise<boolean> => {
   const devices = await spotifyApi.getMyDevices();
   return devices.body?.devices?.some((device) => device.is_active) ?? false;
 };
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

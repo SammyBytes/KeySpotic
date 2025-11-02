@@ -23,7 +23,8 @@
   "author": "Samuel Beato",
   "license": "MIT",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/node-notifier": "^8.0.5"
   },
   "peerDependencies": {
     "typescript": "^5"

@@ -4,40 +4,51 @@ import {
   retrieveTokens,
   tokenExists,
 } from "./services/database/tokensServices";
-import { scopes, spotifyApi } from "./config/spotify";
+import {
+  isNotExpired,
+  refreshTokenIfNeeded,
+  scopes,
+  spotifyApi,
+} from "./config/spotify";
 /**
  * Initializes Spotify authentication by retrieving existing tokens
  * and setting up the HTTPS server for OAuth callbacks.
  *
  */
 export const initSpotifyAuth = () => {
-  const result = retrieveAuthorizationToken();
-  if (result) return;
-  serveSpotify();
+  if (!setupSpotifyToken()) 
+    serveSpotify();
 };
 
-/**
- * Sets up Spotify authentication by checking for existing tokens
- * and generating an authorization URL if none exist.
- */
-const retrieveAuthorizationToken = (): boolean => {
-  const isTokenExists = tokenExists();
+const setupSpotifyToken = (): boolean => {
+  if (!tokenExists()) {
+    return promptAuthorization();
+  }
 
-  if (isTokenExists) {
-    console.log("[Spotify] Token already exists. No need to reauthorize.");
-    console.log("[Spotify] Delete spotify.db to reauthorize.");
-    const { accessToken } = retrieveTokens()!;
-    spotifyApi.setAccessToken(accessToken);
+  const tokens = retrieveTokens()!;
+  if (isNotExpired(tokens.expiresIn)) {
+    console.log("[Spotify] Token valid. Using existing token.");
+    spotifyApi.setAccessToken(tokens.accessToken);
     return true;
   }
 
-  // Generate authorization URL
+  console.log("[Spotify] Token expired. Refreshing...");
+  refreshTokenIfNeeded(tokens.refreshToken, tokens.expiresIn);
+  const updatedTokens = retrieveTokens()!;
+  spotifyApi.setAccessToken(updatedTokens.accessToken);
+  return true;
+};
+
+/**
+ * Prompts the user to authorize the application with Spotify by displaying
+ * @returns {boolean} False indicating authorization is required.
+ */
+const promptAuthorization = (): boolean => {
   const authorizeURL = spotifyApi.createAuthorizeURL(scopes, "state-spotify");
   console.log("\n Open this link to authorize Spotify:");
   console.log(authorizeURL);
   return false;
 };
-
 /**
  * Sets up and starts the HTTPS server to handle Spotify OAuth callbacks.
  */
